@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Painel financeiro e meta Terracap</title>
+<style>
+:root{--bg:#fff;--sub:#f6f7f9;--tx:#111;--tx2:#555;--tx3:#888;--bd:#dcdfe4;--bd2:#eceef1;--ok:#1a7f37;--warn:#9a6700;--bad:#c62828;--c0:#2f6fed;--c1:#e0a100;--c2:#18a6b8;--oth:#9aa0a6}
+@media (prefers-color-scheme:dark){:root{--bg:#121316;--sub:#1b1d21;--tx:#eceef1;--tx2:#b4b8bf;--tx3:#80858d;--bd:#33363c;--bd2:#26282d;--ok:#4cc26b;--warn:#e0b341;--bad:#ff6b6b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:1280px;margin:0 auto;padding:24px 20px 80px}
+h1{font-size:28px;margin:0 0 6px}h2{font-size:20px;margin:36px 0 10px;padding-top:8px;border-top:1px solid var(--bd2)}h3{font-size:16px;margin:18px 0 8px}
+.sum{color:var(--tx2);margin:0 0 14px}.cap{color:var(--tx3);font-size:13px;margin:-4px 0 10px}
+nav{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px;margin-bottom:8px}nav a{color:var(--tx2)}
+.tw{overflow-x:auto;width:100%;margin:8px 0}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{color:var(--tx2);font-weight:500;text-align:left;padding:6px 8px;border-bottom:1px solid var(--bd);white-space:nowrap}
+td{padding:4px 8px;border-bottom:1px solid var(--bd2);vertical-align:middle}
+.r{text-align:right}
+input[type=text],select{width:100%;min-width:80px;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:6px;padding:4px 6px;font:inherit;font-size:14px}
+select{min-width:110px}input.num{text-align:right}input.wide{min-width:180px}input.sm{min-width:58px}
+.btn{background:var(--sub);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:6px 12px;font:inherit;cursor:pointer}
+.btn.pri{background:var(--c0);color:#fff;border-color:var(--c0)}
+.x{background:transparent;border:1px solid var(--bd);color:var(--tx2);border-radius:6px;cursor:pointer;padding:1px 8px}
+.wrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:10px 0;align-items:end}
+.wrap label{display:flex;flex-direction:column;font-size:13px;color:var(--tx2);gap:4px}
+.wrap label.ck{flex-direction:row;align-items:center;gap:8px}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:12px 0}
+.m{border:1px solid var(--bd);border-radius:12px;padding:14px}.m .v{font-size:24px;font-weight:600}.m .l{color:var(--tx2);font-size:13px}.m .d{color:var(--tx3);font-size:12px}
+.card{border:1px solid var(--bd);border-radius:16px;padding:18px;margin:12px 0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px}
+.call{border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--sub);border-left:4px solid var(--warn)}
+.call.info{border-left-color:var(--c0)}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.mut{color:var(--tx3);font-size:12px}
+.props div{display:flex;justify-content:space-between;gap:16px;padding:6px 0;border-bottom:1px solid var(--bd2)}.props div span:first-child{color:var(--tx2)}
+.rows>div{padding:10px 0;border-bottom:1px solid var(--bd2);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.rows .t{font-weight:500}.rows .dt{color:var(--tx2);font-size:14px}
+.seg{display:inline-flex;flex-wrap:wrap;border:1px solid var(--bd);border-radius:8px;overflow:hidden;margin:8px 0}.seg button{border:0;background:transparent;color:var(--tx2);padding:6px 12px;font:inherit;cursor:pointer}.seg button.on{background:var(--sub);color:var(--tx);font-weight:600}
+.months{display:flex;flex-wrap:wrap;gap:8px 14px;margin:8px 0}.months label{font-size:13px;display:flex;align-items:center;gap:4px}
+textarea{width:100%;min-height:80px;background:var(--sub);color:var(--tx);border:1px solid var(--bd);border-radius:8px;font:12px ui-monospace,monospace;padding:8px}
+.eq{font-family:ui-serif,Georgia,serif;font-size:16px;margin:10px 0;padding:10px;background:var(--sub);border-radius:8px;text-align:center}
+svg text{fill:var(--tx3);font-size:11px}
+.leg{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--tx2);margin-bottom:6px}.leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle}
+ul{padding-left:20px}li{margin:4px 0}
+.new td{background:color-mix(in srgb,var(--c2) 8%,transparent)}
+</style>
+</head>
+<body>
+<main>
+<h1>Painel financeiro e meta Terracap</h1>
+<p class="sum">Controle de contas, rendas e consórcios, com simulação de contemplação, saque após 180 dias e chance de juntar o valor para quitar o lote Terracap. Valores iniciais de 15/11/2026; todo campo é editável, os cálculos se refazem na hora e o que você digita fica salvo só neste navegador.</p>
+<nav><a href="#visao">Visão geral</a><a href="#patrimonio">Patrimônio</a><a href="#dividas">Dívidas</a><a href="#fluxo">Rendas, despesas e fluxo</a><a href="#consorcios">Consórcios</a><a href="#meta">Meta Terracap</a><a href="#otimizador">Otimizador</a><a href="#alertas">Alertas</a><a href="#premissas">Premissas</a><a href="#salvar">Salvar e restaurar</a></nav>
+
+<h2 id="visao">Visão geral</h2>
+<p id="vis-txt"></p>
+<div class="metrics" id="metrics"></div>
+<div class="call" id="callout"></div>
+
+<h2 id="patrimonio">Patrimônio</h2>
+<p class="cap">Valores em 15/11/2026, tirados dos prints dos apps. Campos vazios são para você preencher.</p>
+<div class="tw" id="t-ativos"></div>
+<div class="wrap"><button class="btn" data-act="addAtivo">Adicionar conta</button><label>Câmbio US$/R$ (ajuste)<input type="text" class="num" data-k="p.cambio"></label></div>
+<div class="props" id="pat-props"></div>
+
+<h2 id="dividas">Dívidas</h2>
+<p class="cap">O lote Terracap é tratado em Meta Terracap.</p>
+<div class="tw" id="t-dividas"></div>
+<div class="wrap"><button class="btn" data-act="addDivida">Adicionar dívida</button><label class="ck"><input type="checkbox" data-k="p.quitarNubank"> Quitar Nubank à vista em nov/26</label></div>
+<div class="props" id="div-props"></div>
+
+<h2 id="fluxo">Rendas, despesas e fluxo de caixa</h2>
+<div class="grid2">
+ <div class="card"><h3 style="margin-top:0">Rendas mensais</h3><div class="tw" id="t-rendas"></div><button class="btn" data-act="addRenda">Adicionar renda</button><p id="tot-rendas"></p></div>
+ <div class="card"><h3 style="margin-top:0">Despesas mensais</h3><div class="tw" id="t-despesas"></div><button class="btn" data-act="addDespesa">Adicionar despesa</button><p id="tot-desp"></p></div>
+</div>
+<h3>Meses em que a parcela do lote é paga</h3>
+<div class="months" id="months"></div>
+<div class="wrap"><label>Cenário de contemplação no fluxo<select data-k="p.cenario"><option value="todas">Todas na assembleia informada</option><option value="p50">Só cotas com chance ≥ 50%</option><option value="nenhuma">Nenhuma contemplada</option></select></label></div>
+<div class="card"><div class="leg"><span><i style="background:var(--c0)"></i>Caixa projetado</span><span><i style="background:var(--c1)"></i>Valor para quitar o lote</span></div><div id="ch-fluxo"></div></div>
+<div class="tw" id="t-fluxo"></div>
+
+<h2 id="consorcios">Simulador de consórcios</h2>
+<p>As cotas 1 a 5 são do BB Consórcios (Banco do Brasil), que publica o resultado de cada assembleia, com os lances vencedores, no app e no site. Cole aqui os percentuais do seu grupo. Parcela, saldo devedor, cotas ativas e lances vencedores das cotas 1 a 5 são estimativas: ajuste com dados da administradora.</p>
+<div class="call info"><b>Cota 6 (transferida):</b> plano de 140 meses com 100 pagos (cerca de 71%), lance vencedor médio do grupo de 10%. Carta, parcela e administradora ainda são provisórios (a confirmar). Como o saldo devedor é baixo, o saque em dinheiro depois da contemplação devolve a maior parte da carta. É a cota que pode de fato somar caixa líquido para a meta Terracap. Se o saldo devedor ficar vazio, ele é calculado como parcelas restantes × parcela.</div>
+<div class="wrap">
+ <label>Rendimento do crédito até o saque (% do CDI)<input type="text" class="num" data-k="p.pctCredito"></label>
+ <label class="ck"><input type="checkbox" data-k="p.mensal"> Concorrer todo mês até ser contemplado</label>
+</div>
+<div class="seg" id="seg-cotas"><button data-vista="carta">Carta e saldo</button><button data-vista="lance">Lance e grupo</button></div>
+<div class="tw" id="t-cotas"></div>
+<div class="wrap"><button class="btn" data-act="restaurarCartas">Restaurar cartas originais</button></div>
+<div class="tw" id="t-cotasres"></div>
+<div class="eq">Saque líquido = (Carta − Embutido) × (1 + CDI × %)<sup>0,5</sup> − (Saldo devedor − Lance − 6 × Parcela)</div>
+<p>Trocar o bem de referência muda carta, parcela, saldo devedor e lance na mesma proporção. Cotas já quitadas ficam fora da simulação.</p>
+
+<h2 id="meta">Meta Terracap</h2>
+<p class="cap">Saldo padrão do último extrato informado; atualize com o extrato mais recente.</p>
+<div class="wrap">
+ <label>Saldo do lote hoje (R$)<input type="text" class="num" data-k="p.saldoLote"></label>
+ <label>Parcela do lote (R$)<input type="text" class="num" data-k="p.parcelaLote"></label>
+ <label>Juros do contrato (% a.m.)<input type="text" class="num" data-k="p.jurosLote"></label>
+ <label>IPCA (% a.a.)<input type="text" class="num" data-k="p.ipca"></label>
+ <label>Multa por atraso (%)<input type="text" class="num" data-k="p.multa"></label>
+ <label>Juros de mora (% a.m.)<input type="text" class="num" data-k="p.jurosMora"></label>
+ <label>CDI (% a.a.)<input type="text" class="num" data-k="p.cdi"></label>
+ <label>Reserva rende (% do CDI)<input type="text" class="num" data-k="p.pctRes"></label>
+ <label class="ck"><input type="checkbox" data-k="p.refis"> Considerar Refis (TerraMais)</label>
+ <label>Refis disponível a partir de<select data-k="p.refisMes" class="mes"></select></label>
+ <label>Perdão de multa e juros no Refis (%)<input type="text" class="num" data-k="p.perdao"></label>
+ <label>Prêmio em Certidão de Crédito (%)<input type="text" class="num" data-k="p.premio"></label>
+ <label>Mês-alvo da quitação<select data-k="p.alvo" class="mes"></select></label>
+</div>
+<div class="grid2">
+ <div class="card"><h3 style="margin-top:0" id="h-quit"></h3><div class="props" id="quit-props"></div></div>
+ <div class="card"><h3 style="margin-top:0">Valor esperado dos consórcios</h3><div class="props" id="ev-props"></div></div>
+</div>
+<div class="grid2">
+ <div class="card"><h3 style="margin-top:0">Chance de ter o valor de quitação, por mês</h3><div id="ch-prob"></div></div>
+ <div class="card"><h3 style="margin-top:0" id="h-hist"></h3><div id="ch-hist"></div></div>
+</div>
+
+<h2 id="otimizador">Otimizador de cartas e lances</h2>
+<div class="wrap"><label>Reserva mínima de emergência (R$)<input type="text" class="num" data-k="p.reservaMin"></label><button class="btn pri" data-act="otimizar">Otimizar</button><button class="btn" data-act="aplicar" id="btn-aplicar" style="display:none">Aplicar sugestão</button></div>
+<p id="opt-txt"></p>
+<div class="tw" id="t-opt"></div>
+<p id="opt-res"></p>
+
+<h2 id="alertas">Alertas</h2>
+<div class="rows" id="alertas-rows"></div>
+
+<h2 id="premissas">Premissas</h2>
+<ul>
+<li>Chance por assembleia: sorteio = sorteios ÷ cotas ativas; lance ≥ vencedor médio = 80%; entre mínimo e médio = 20% a 80%; abaixo do mínimo = 2%. É uma heurística, não estatística do grupo.</li>
+<li>Res. BCB 285/2023: crédito não usado pode ser sacado em espécie 180 dias após a contemplação, com as obrigações do grupo quitadas.</li>
+<li>Até o saque as parcelas da cota continuam; no saque o saldo restante é quitado e as parcelas param.</li>
+<li>Lance embutido sai da carta; lance livre sai da reserva no mês da contemplação.</li>
+<li>Lote: saldo corrigido por 0,2% a.m. + IPCA; parcela fixa; atraso com multa e juros de mora sobre cada parcela vencida. O Refis perdoa só multa e juros, nunca o principal.</li>
+<li>Rendimento de lances e saques entre meses e imposto de renda não estão no cálculo.</li>
+</ul>
+
+<h2 id="salvar">Salvar e restaurar dados</h2>
+<p class="cap">Tudo o que você digita fica salvo automaticamente neste navegador (não vai para servidor nenhum). Para levar a outro aparelho, copie o texto abaixo e cole no outro.</p>
+<textarea id="exp" readonly></textarea>
+<div class="wrap"><button class="btn" data-act="copiar">Copiar</button></div>
+<textarea id="imp" placeholder="Cole aqui os dados salvos"></textarea>
+<div class="wrap"><button class="btn" data-act="importar">Importar</button><button class="btn" data-act="reset">Voltar aos valores de 15/11/2026</button></div>
+<p id="imp-msg"></p>
+</main>
+<script>
+"use strict";
+const MESES=["nov/26","dez/26","jan/27","fev/27","mar/27","abr/27","mai/27","jun/27","jul/27","ago/27","set/27","out/27","nov/27","dez/27"];const NM=MESES.length;
+const LS="painelFinVitor_v1";
+function mkCota(id,desc,grupo,cota,adq,carta,parcela,saldo,ativas,extra){return Object.assign({id,desc,adm:"BB Consórcios",grupo,cota,adquirida:adq,cartaOrig:carta,carta,parcela,saldoDev:saldo,prazo:"",restantes:"",lancePct:"15",embutidoPct:"0",sorteios:"1",lancesK:"3",ativas,vencMin:"20",vencMed:"35",asm:"0",pManual:"",ativa:true},extra||{});}
+const ENC={iv:"SOMoalbJ9BNWU73G",ct:"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"};let INICIAL=null;
+const clone=o=>JSON.parse(JSON.stringify(o));
+let S=null;try{S=JSON.parse(localStorage.getItem(LS))}catch(e){S=null}if(S&&(!Array.isArray(S.ativos)||!Array.isArray(S.cotas)))S=null;
+let vista="carta",sug=null;
+function save(){try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}}
+function num(s){if(s===undefined||s===null)return 0;let t=String(s).trim().replace(/R\$|\s|%/g,"");if(t.includes(","))t=t.replace(/\./g,"").replace(",",".");else if(/^-?\d{1,3}(\.\d{3})+$/.test(t))t=t.replace(/\./g,"");const v=parseFloat(t);return isFinite(v)?v:0}
+const brl=n=>n.toLocaleString("pt-BR",{style:"currency",currency:"BRL",minimumFractionDigits:2,maximumFractionDigits:2});
+const brl0=n=>n.toLocaleString("pt-BR",{style:"currency",currency:"BRL",minimumFractionDigits:0,maximumFractionDigits:0});
+const mil=n=>"R$ "+(n/1000).toLocaleString("pt-BR",{maximumFractionDigits:0})+" mil";
+const pc=x=>(x*100).toLocaleString("pt-BR",{maximumFractionDigits:1})+"%";
+const mesLabel=i=>(i>=0&&i<NM?MESES[i]:i>=NM?"após dez/27":"—");
+const esc=s=>String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
+const $=id=>document.getElementById(id);
+function getK(path){return path.split(".").reduce((o,k)=>o==null?undefined:o[k],S)}
+function setK(path,v){const ks=path.split(".");let o=S;for(let i=0;i<ks.length-1;i++)o=o[ks[i]];o[ks[ks.length-1]]=v}
+function mulberry32(a){return function(){a|=0;a=(a+0x6d2b79f5)|0;let t=Math.imul(a^(a>>>15),1|a);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296}}
+function pHeur(c,lp){const N=num(c.ativas),ks=num(c.sorteios),kl=num(c.lancesK);const ps=N>0?Math.min(1,ks/N):0;const mn=num(c.vencMin),md=num(c.vencMed);let pl=0;if(lp<=0||kl<=0)pl=0;else if(lp>=md)pl=0.8;else if(lp>=mn)pl=md>mn?0.2+0.6*(lp-mn)/(md-mn):0.8;else pl=0.02;return 1-(1-ps)*(1-pl)}
+function saldoBase(c){return String(c.saldoDev).trim()!==""?num(c.saldoDev):num(c.restantes)*num(c.parcela)}
+function calcCota(c,fy,cartaOv,lanceOv){const orig=num(c.cartaOrig);const carta=cartaOv!==undefined?cartaOv:num(c.carta);const f=orig>0?carta/orig:1;const parcela=num(c.parcela)*f;const S0=saldoBase(c)*f;const lp=lanceOv!==undefined?lanceOv:num(c.lancePct);const L=lp/100*carta;const E=Math.min(L,num(c.embutidoPct)/100*carta);const livre=L-E;const credito=carta-E;const quit=Math.max(0,S0-L-parcela*6);const net=credito*fy-quit;const manual=String(c.pManual).trim()!=="";const p=manual?Math.max(0,Math.min(1,num(c.pManual)/100)):pHeur(c,lp);return{id:c.id,label:c.grupo+"/"+c.cota,ativa:c.ativa,carta,f,parcela,S:S0,L,E,livre,credito,quit,net,p,asm:Math.round(num(c.asm)),manual}}
+function simLote(P,pagar){let B=num(P.saldoLote);const j=num(P.jurosLote)/100;const im=Math.pow(1+num(P.ipca)/100,1/12)-1;const parc=num(P.parcelaLote);const multa=num(P.multa)/100,jm=num(P.jurosMora)/100;const over=[];const out={saldo:[],enc:[],atraso:[],idade:[]};for(let t=0;t<NM;t++){B=B*(1+j)*(1+im);if(pagar[t])B=Math.max(0,B-parc);else over.push(t);let e=0;for(const o of over)e+=parc*(multa+jm*(t-o));out.saldo.push(B);out.enc.push(e);out.atraso.push(over.length);out.idade.push(over.length?t-over[0]:-1)}return out}
+function addEventos(evt,c,m){if(m<0||m>=NM)return;evt[m]-=c.livre;const s=m+6;if(s<NM){evt[s]+=c.net;for(let k=s+1;k<NM;k++)evt[k]+=c.parcela}}
+function monteCarlo(cs,base,pay,runs,mensal,T,seed){const r=mulberry32(seed);const hits=new Array(NM).fill(0);const am=[];let soma=0;for(let run=0;run<runs;run++){const d=new Array(NM).fill(0);for(const c of cs){if(!c.ativa||c.asm<0||c.asm>=NM)continue;const last=mensal?NM-1:c.asm;let m=-1;for(let k=c.asm;k<=last;k++){if(r()<c.p){m=k;break}}if(m>=0)addEventos(d,c,m)}let acc=0;for(let t=0;t<NM;t++){acc+=d[t];const cash=base[t]+acc;if(cash>=pay[t])hits[t]++;if(t===T){am.push(cash-pay[t]);soma+=cash}}}return{prob:hits.map(h=>h/runs),amostras:am,media:soma/runs}}
+
+let C={};
+function compute(){
+const P=S.p;const cdi=num(P.cdi)/100;const fy=Math.pow(1+cdi*num(P.pctCredito)/100,0.5);const rRes=Math.pow(1+cdi*num(P.pctRes)/100,1/12)-1;const T=Math.round(num(P.alvo));const cambio=num(P.cambio);
+const valorAtivo=a=>a.usd!==undefined?num(a.usd)*cambio:num(a.valor);
+const patrimonio=S.ativos.filter(a=>a.incluir).reduce((x,a)=>x+valorAtivo(a),0);
+const R0=S.ativos.filter(a=>a.incluir&&a.liquido).reduce((x,a)=>x+valorAtivo(a),0);
+const rendaM=S.rendas.reduce((x,a)=>x+num(a.valor),0),despM=S.despesas.reduce((x,a)=>x+num(a.valor),0);
+const isNub=d=>d.id.startsWith("nub");
+const dividaTotal=S.dividas.reduce((x,d)=>x+num(d.saldo),0),nubTotal=S.dividas.filter(isNub).reduce((x,d)=>x+num(d.saldo),0);
+const flag=a=>{if(a.tipo==="Capitalização")return["Abaixo do CDI","bad"];if(a.tipo==="Conta corrente")return["Sem rendimento",""];if(String(a.rend12m).trim()!=="")return num(a.rend12m)/100<cdi*0.9?["Abaixo do CDI","bad"]:["Em linha com o CDI","ok"];if(String(a.pctCdi).trim()!=="")return num(a.pctCdi)<90?["Abaixo do CDI","bad"]:["Em linha com o CDI","ok"];return["Sem dado",""]};
+const cc=S.cotas.map(c=>calcCota(c,fy));
+const lote=simLote(P,S.pagarLote);const refisMes=Math.round(num(P.refisMes));const perdao=num(P.perdao)/100;
+const pay=lote.saldo.map((b,t)=>b+lote.enc[t]*(P.refis&&t>=refisMes?1-perdao:1));const payNo=lote.saldo.map((b,t)=>b+lote.enc[t]);
+const R00=R0-(P.quitarNubank?nubTotal:0);
+const fixos={div:[],cons:[],lote:[],base:[]};const consM=cc.filter(c=>c.ativa).reduce((x,c)=>x+c.parcela,0);
+{let R=R00;for(let t=0;t<NM;t++){const dv=S.dividas.filter(d=>!(P.quitarNubank&&isNub(d))&&num(d.restantes)>t).reduce((x,d)=>x+num(d.parcela),0);const lt=S.pagarLote[t]?num(P.parcelaLote):0;R=R*(1+rRes)+rendaM-despM-dv-consM-lt;fixos.div.push(dv);fixos.cons.push(consM);fixos.lote.push(lt);fixos.base.push(R)}}
+const cen=c=>P.cenario==="todas"?c.asm:P.cenario==="p50"?(c.p>=0.5?c.asm:-1):-1;
+const evt=new Array(NM).fill(0);cc.forEach(c=>{if(c.ativa)addEventos(evt,c,cen(c))});
+const fluxo=[];{let R=R00;for(let t=0;t<NM;t++){R=R*(1+rRes)+rendaM-despM-fixos.div[t]-fixos.cons[t]-fixos.lote[t]+evt[t];fluxo.push(R)}}
+const mc=monteCarlo(cc,fixos.base,pay,5000,P.mensal,T,12345);
+const at=cc.filter(c=>c.ativa);const somaLivre=at.reduce((x,c)=>x+c.livre,0),ev=at.reduce((x,c)=>x+c.p*c.net,0),evLiq=at.reduce((x,c)=>x+c.p*(c.net-c.livre),0),somaNet=at.reduce((x,c)=>x+c.net,0);
+const cashT=T>=0&&T<NM?fluxo[T]:0,payT=T>=0&&T<NM?pay[T]:0;const orc=R00-num(P.reservaMin);
+let mesExec=-1;for(let t=0;t<NM;t++)if(lote.idade[t]>=3){mesExec=t;break}
+C={P,fy,T,valorAtivo,patrimonio,R0,rendaM,despM,dividaTotal,nubTotal,flag,cc,lote,refisMes,pay,payNo,fixos,evt,fluxo,mc,somaLivre,ev,evLiq,somaNet,cashT,payT,gapT:cashT-payT,orc,mesExec,atrasoT:T>=0&&T<NM?lote.atraso[T]:0};
+}
+
+// ---------- input tables ----------
+const inp=(k,cls,ph)=>`<input type="text" class="${cls||"num"}" data-k="${k}" placeholder="${ph===undefined?"preencher":ph}">`;
+const ck=k=>`<input type="checkbox" data-k="${k}">`;
+const sel=(k,opts)=>`<select data-k="${k}">${opts.map(o=>`<option value="${esc(o[0])}">${esc(o[1])}</option>`).join("")}</select>`;
+const MOPTS=MESES.map((m,i)=>[String(i),m]);
+function tbl(head,rows,right){right=right||[];return`<table><thead><tr>${head.map((h,i)=>`<th class="${right.includes(i)?"r":""}">${h}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr class="${r.cls||""}">${r.cells.map((c,j)=>`<td class="${right.includes(j)?"r":""}">${c}</td>`).join("")}</tr>`).join("")}</tbody></table>`}
+const TIPOS=["Liquidez","Conta corrente","Renda fixa","Fundos","Renda variável","Cripto","Capitalização"].map(t=>[t,t]);
+function renderInputs(){
+$("t-ativos").innerHTML=tbl(["Conta ou aplicação","Tipo","Valor (R$)","Rend. 12m (%)","% do CDI","Líquido p/ lance","Incluir","Sinal","Nota",""],S.ativos.map((a,i)=>({cells:[inp(`ativos.${i}.nome`,"wide"),sel(`ativos.${i}.tipo`,TIPOS),a.usd!==undefined?inp(`ativos.${i}.usd`)+`<div class="mut" id="usd-${i}"></div>`:inp(`ativos.${i}.valor`),inp(`ativos.${i}.rend12m`,"num sm","—"),inp(`ativos.${i}.pctCdi`,"num sm","—"),ck(`ativos.${i}.liquido`),ck(`ativos.${i}.incluir`),`<span id="flag-${i}"></span>`,inp(`ativos.${i}.nota`,"wide",""),`<button class="x" data-del="ativos.${i}">×</button>`]})),[2,3,4]);
+$("t-dividas").innerHTML=tbl(["Dívida","Saldo (R$)","Parcela (R$)","Parcelas restantes","Nota",""],S.dividas.map((d,i)=>({cells:[inp(`dividas.${i}.nome`,"wide"),inp(`dividas.${i}.saldo`),inp(`dividas.${i}.parcela`),inp(`dividas.${i}.restantes`,"num sm"),inp(`dividas.${i}.nota`,"wide",""),`<button class="x" data-del="dividas.${i}">×</button>`]})),[1,2,3]);
+["rendas","despesas"].forEach(k=>{$("t-"+k).innerHTML=tbl([k==="rendas"?"Renda":"Despesa","R$/mês",""],S[k].map((a,i)=>({cells:[inp(`${k}.${i}.nome`,"wide"),inp(`${k}.${i}.valor`),`<button class="x" data-del="${k}.${i}">×</button>`]})),[1])});
+$("months").innerHTML=MESES.map((m,i)=>`<label><input type="checkbox" data-k="pagarLote.${i}"> ${m}</label>`).join("");
+document.querySelectorAll("select.mes").forEach(s=>{s.innerHTML=MOPTS.map(o=>`<option value="${o[0]}">${o[1]}</option>`).join("")});
+document.querySelectorAll("#seg-cotas button").forEach(b=>b.classList.toggle("on",b.dataset.vista===vista));
+if(vista==="carta"){
+$("t-cotas").innerHTML=tbl(["Cota","Bem","Administradora","Carta original","Carta (bem de ref.)","Parcela original","Saldo devedor original","Prazo / restantes","Assembleia","Ativa","Parcela ajustada","Quitar no saque"],S.cotas.map((c,i)=>({cls:c.novo?"new":"",cells:[`<span class="mut">${esc(c.grupo)}/${esc(c.cota)}<br>${esc(c.adquirida)}</span>`,inp(`cotas.${i}.desc`,"wide"),inp(`cotas.${i}.adm`,"","a confirmar"),inp(`cotas.${i}.cartaOrig`),inp(`cotas.${i}.carta`),inp(`cotas.${i}.parcela`),inp(`cotas.${i}.saldoDev`,"num",c.restantes?"restantes × parcela":"preencher"),`<div style="display:flex;gap:4px">${inp(`cotas.${i}.prazo`,"num sm","—")}${inp(`cotas.${i}.restantes`,"num sm","—")}</div>`,sel(`cotas.${i}.asm`,MOPTS),ck(`cotas.${i}.ativa`),`<span id="cpar-${i}"></span>`,`<span id="cquit-${i}"></span>`]})),[3,4,5,6,10,11]);
+}else{
+$("t-cotas").innerHTML=tbl(["Cota","Grupo","Cota nº","Lance total %","Lance embutido %","Sorteios/assemb.","Lances/assemb.","Cotas ativas","Lance venc. mín. %","Lance venc. médio %","Chance manual %","Lance (R$)"],S.cotas.map((c,i)=>({cls:c.novo?"new":"",cells:[`<span class="mut">${esc(c.desc)}</span>`,inp(`cotas.${i}.grupo`,"num sm",""),inp(`cotas.${i}.cota`,"num sm",""),inp(`cotas.${i}.lancePct`,"num sm"),inp(`cotas.${i}.embutidoPct`,"num sm"),inp(`cotas.${i}.sorteios`,"num sm"),inp(`cotas.${i}.lancesK`,"num sm"),inp(`cotas.${i}.ativas`,"num sm"),inp(`cotas.${i}.vencMin`,"num sm"),inp(`cotas.${i}.vencMed`,"num sm"),inp(`cotas.${i}.pManual`,"num sm","auto"),`<span id="clance-${i}"></span>`]})),[3,4,5,6,7,8,9,10,11]);
+}
+document.querySelectorAll("[data-k]").forEach(el=>{const v=getK(el.dataset.k);if(el.type==="checkbox")el.checked=!!v;else el.value=v??""});
+}
+
+// ---------- charts ----------
+function lineChart(series,opt){const W=600,H=240,pl=64,pr=14,pt=12,pb=28;let all=series.flatMap(s=>s.v);let mx=opt.max!==undefined?opt.max:Math.max(1,...all)*1.1,mn=opt.min!==undefined?opt.min:Math.min(0,...all);if(mx===mn)mx=mn+1;const x=i=>pl+(W-pl-pr)*i/(NM-1),y=v=>pt+(H-pt-pb)*(1-(v-mn)/(mx-mn));let g="";for(let k=0;k<=4;k++){const v=mn+(mx-mn)*k/4;g+=`<line x1="${pl}" x2="${W-pr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--bd2)"/><text x="${pl-6}" y="${y(v)+4}" text-anchor="end">${opt.fmt(v)}</text>`}[0,3,6,9,13].forEach(i=>{g+=`<text x="${x(i)}" y="${H-8}" text-anchor="middle">${MESES[i]}</text>`});const paths=series.map(s=>`<polyline fill="none" stroke="${s.c}" stroke-width="2.2" ${s.dash?'stroke-dasharray="5 4"':""} points="${s.v.map((v,i)=>x(i)+","+y(v)).join(" ")}"/>`).join("");return`<svg viewBox="0 0 ${W} ${H}" width="100%">${g}${paths}</svg>`}
+function colChart(pts){const W=600,H=220,pl=10,pb=40,pt=10;const mx=Math.max(1,...pts.map(p=>p.v));const bw=(W-2*pl)/pts.length;return`<svg viewBox="0 0 ${W} ${H}" width="100%">${pts.map((p,i)=>{const h=(H-pb-pt)*p.v/mx;return`<rect x="${pl+i*bw+4}" y="${H-pb-h}" width="${bw-8}" height="${h}" rx="3" fill="${p.neg?"var(--bad)":"var(--c0)"}" opacity=".85"/><text x="${pl+i*bw+bw/2}" y="${H-pb-h-4}" text-anchor="middle">${p.d}</text><text x="${pl+i*bw+bw/2}" y="${H-pb+14}" text-anchor="middle">${p.l}</text>`}).join("")}</svg>`}
+
+// ---------- outputs ----------
+const props=items=>items.map(([k,v])=>`<div><span>${k}</span><span>${v}</span></div>`).join("");
+const tag=(t,c)=>`<span class="${c||""}">${t}</span>`;
+function renderOutputs(){
+compute();const P=S.p,T=C.T;
+$("vis-txt").textContent=`No mês-alvo (${mesLabel(T)}), no cenário escolhido, o caixa projetado ${C.gapT>=0?"cobre":"não cobre"} a quitação do lote.`;
+const pr=C.mc.prob[T]??0;
+$("metrics").innerHTML=[[brl0(C.R0),"Reserva líquida hoje","contas marcadas como líquidas",""],[brl0(C.cashT),"Caixa projetado em "+mesLabel(T),P.cenario==="todas"?"todas as cotas contempladas":P.cenario==="p50"?"cotas com chance de 50% ou mais":"sem contemplação",""],[brl0(C.payT),"Para quitar o lote em "+mesLabel(T),P.refis&&T>=C.refisMes?"com Refis":"sem Refis",""],[pc(pr),"Chance de atingir (Monte Carlo)","5.000 simulações",pr>=0.5?"ok":"warn"]].map(m=>`<div class="m"><div class="v ${m[3]}">${m[0]}</div><div class="l">${m[1]}</div><div class="d">${m[2]}</div></div>`).join("");
+const c6=C.cc.find(c=>c.id==="c6");
+$("callout").innerHTML=`<b>O consórcio devolve dinheiro, não cria dinheiro.</b> Para sacar em espécie é preciso quitar o saldo devedor da cota, então o saque líquido fica perto do lance pago mais as parcelas já pagas, menos as taxas. Com os valores atuais, as cotas ativas somam ${brl0(C.somaNet)} de saque líquido contra ${brl0(C.somaLivre)} de lances em dinheiro.${c6&&c6.ativa?` A exceção é a cota 6 (transferida, ~71% paga): saque líquido estimado de ${brl0(c6.net)} para ${brl0(c6.livre)} de lance.`:""} Preencha o saldo devedor real de cada cota antes de confiar nesta conta.`;
+S.ativos.forEach((a,i)=>{const f=C.flag(a);const el=$("flag-"+i);if(el)el.innerHTML=tag(f[0],f[1]);const u=$("usd-"+i);if(u)u.textContent="US$ × câmbio = "+brl(C.valorAtivo(a))});
+const abaixo=S.ativos.filter(a=>a.incluir&&C.flag(a)[1]==="bad").reduce((x,a)=>x+C.valorAtivo(a),0);
+$("pat-props").innerHTML=props([["Patrimônio incluído",brl(C.patrimonio)],["Reserva líquida (disponível para lances)",brl(C.R0)],["Aplicações abaixo do CDI",brl(abaixo)]]);
+$("div-props").innerHTML=props([["Total de dívidas (sem o lote)",brl(C.dividaTotal)],["Nubank (fatura + empréstimo)",brl(C.nubTotal)]]);
+$("tot-rendas").textContent=`Total: ${brl(C.rendaM)} por mês`;$("tot-desp").textContent=`Total: ${brl(C.despM)} por mês, sem consignado, consórcios e lote (entram sozinhos no fluxo).`;
+$("ch-fluxo").innerHTML=lineChart([{v:C.fluxo,c:"var(--c0)"},{v:C.pay,c:"var(--c1)"}],{fmt:mil});
+$("t-fluxo").innerHTML=tbl(["Mês","Rendas − despesas","Dívidas","Parcelas consórcio","Parcela lote","Lances e saques","Caixa no fim do mês","Quitação do lote"],MESES.map((m,t)=>({cells:[m,brl0(C.rendaM-C.despM),brl0(-C.fixos.div[t]),brl0(-C.fixos.cons[t]),S.pagarLote[t]?brl0(-C.fixos.lote[t]):tag("não paga","warn"),brl0(C.evt[t]),tag(brl0(C.fluxo[t]),C.fluxo[t]<0?"bad":""),brl0(C.pay[t])]})),[1,2,3,4,5,6,7]);
+C.cc.forEach((c,i)=>{const a=$("cpar-"+i);if(a)a.textContent=brl0(c.parcela);const b=$("cquit-"+i);if(b)b.textContent=brl0(c.quit);const l=$("clance-"+i);if(l)l.textContent=brl0(c.L)});
+$("t-cotasres").innerHTML=tbl(["Cota","Carta","Lance em dinheiro","Chance/assemb.","Contemplação","Saque (+180 dias)","Saque líquido","Saque − lance"],C.cc.map((c,i)=>({cls:S.cotas[i].novo?"new":"",cells:[esc((S.cotas[i].novo?"6 · transferida ":"")+c.label)+(c.ativa?"":" (inativa)"),brl0(c.carta),brl0(c.livre),(c.manual?"manual ":"")+pc(c.p),mesLabel(c.asm),mesLabel(c.asm+6),brl0(c.net),tag(brl0(c.net-c.livre),c.net-c.livre<0?"bad":"ok")]})),[1,2,3,6,7]);
+$("h-quit").textContent="Quitação em "+mesLabel(T);
+$("quit-props").innerHTML=props([["Saldo devedor projetado",brl(C.lote.saldo[T]??0)],["Multa e juros de atraso",brl(C.lote.enc[T]??0)],["Perdoado pelo Refis",brl((C.payNo[T]??0)-C.payT)],["Valor para quitar",brl(C.payT)],["Caixa projetado no cenário",brl(C.cashT)],[C.gapT>=0?"Sobra":"Falta",tag(brl(Math.abs(C.gapT)),C.gapT>=0?"ok":"bad")],["Prêmio estimado (só se em dia)",C.atrasoT===0?brl(C.payT*num(P.premio)/100)+" em CC":"não se aplica: há parcelas em atraso"]]);
+$("ev-props").innerHTML=props([["Σ chance × saque líquido",brl(C.ev)],["Σ chance × (saque − lance)",brl(C.evLiq)],["Lances em dinheiro (se todas saírem)",brl(C.somaLivre)],["Caixa médio no mês-alvo (Monte Carlo)",brl(C.mc.media)],["Chance de atingir no mês-alvo",pc(pr)]]);
+$("ch-prob").innerHTML=lineChart([{v:C.mc.prob.map(v=>v*100),c:"var(--c0)"}],{min:0,max:100,fmt:v=>v.toFixed(0)+"%"});
+$("h-hist").textContent=`Sobra ou falta em ${mesLabel(T)} nas simulações`;
+{const a=C.mc.amostras;let pts=[];if(a.length){const lo=Math.min(...a),hi=Math.max(...a),nb=8,w=(hi-lo)/nb||1;const bins=new Array(nb).fill(0);a.forEach(v=>bins[Math.min(nb-1,Math.floor((v-lo)/w))]++);pts=bins.map((b,i)=>{const mid=lo+w*(i+.5);return{l:mil(mid),v:b,d:pc(b/a.length),neg:mid<0}})}$("ch-hist").innerHTML=colChart(pts)}
+$("opt-txt").textContent=`Testa cartas de 80% a 120% da original e lances de 0%, lance vencedor mínimo, médio e médio + 5 pontos, uma cota por vez (incluindo a cota 6), e fica com a combinação de maior chance no mês-alvo. Limite de lances em dinheiro: ${brl0(C.orc)} (reserva líquida, menos Nubank, menos reserva mínima). Cotas com chance manual mantêm o lance. A troca de bem depende das regras de cada administradora.`;
+if(sug){$("t-opt").innerHTML=tbl(["Cota","Carta atual","Carta sugerida","Lance atual","Lance sugerido","Lance em dinheiro"],S.cotas.map((c,i)=>{const x=calcCota(c,C.fy,sug.cartas[i],sug.lances[i]);return{cells:[esc(c.grupo+"/"+c.cota),brl0(num(c.carta)),brl0(sug.cartas[i]),num(c.lancePct)+"%",sug.lances[i]+"%",brl0(x.livre)]}}),[1,2,3,4,5]);$("opt-res").textContent=`Chance de atingir em ${mesLabel(T)}: ${pc(sug.antes)} hoje, ${pc(sug.depois)} com a sugestão (700 simulações).`;$("btn-aplicar").style.display=""}else{$("t-opt").innerHTML="";$("opt-res").textContent="";$("btn-aplicar").style.display="none"}
+const al=[
+["Nubank: fatura e parcela de empréstimo vencidas",`Total informado em Dívidas: ${brl(C.nubTotal)}. A reserva cobre o valor.`,P.quitarNubank?["Quitação prevista em nov/26","ok"]:["Em aberto","bad"]],
+["Terracap: mais de 90 dias de atraso permite executar a alienação fiduciária",C.mesExec>=0?`No plano atual isso ocorre em ${mesLabel(C.mesExec)}. Após a intimação do cartório, o prazo para pagar é de 15 dias.`:"No plano atual nenhuma parcela passa de 90 dias.",C.mesExec>=0?["Risco a partir de "+mesLabel(C.mesExec),"bad"]:["Sem risco","ok"]],
+["Refis: regra de 12 meses entre adesões","A última adesão bloqueia uma nova por 12 meses. Nova adesão provável só a partir de jan/2027; não havia edição 2027 anunciada em 15/11/2026.",["Depende de edital","warn"]],
+["Lances consomem a reserva",`Lances em dinheiro somam ${brl0(C.somaLivre)} se todas as cotas saírem; limite com reserva mínima: ${brl0(C.orc)}.`,C.somaLivre>C.orc?["Acima do limite","bad"]:["Dentro do limite","ok"]],
+["Prêmio em Certidão de Crédito não vale para parcela em atraso","Até 12,5% em 2025, para quem antecipa 50% ou mais do saldo estando em dia.",C.atrasoT>0?["Perdido no plano atual","warn"]:["Possível","ok"]],
+["Cota 6 (transferida): dados a confirmar","Carta, parcela, saldo devedor e administradora são provisórios até a transferência ser concluída.",["A confirmar","warn"]]];
+$("alertas-rows").innerHTML=al.map(a=>`<div><div><div class="t">${a[0]}</div><div class="dt">${a[1]}</div></div><div class="${a[2][1]}">${a[2][0]}</div></div>`).join("");
+$("exp").value=JSON.stringify(S);
+}
+
+function otimizar(){compute();const P=S.p,T=C.T,fy=C.fy,orc=C.orc;const mults=[0.8,0.9,1,1.1,1.2];const cartas=S.cotas.map(c=>num(c.carta)),lances=S.cotas.map(c=>num(c.lancePct));
+const baseFor=calc=>{const consM=calc.filter(c=>c.ativa).reduce((x,c)=>x+c.parcela,0);return C.fixos.base.map((b,t)=>b+(C.fixos.cons[t]-consM)*(t+1))};
+const avaliar=(cs,ls)=>{const calc=S.cotas.map((c,i)=>calcCota(c,fy,cs[i],ls[i]));const g=calc.filter(c=>c.ativa).reduce((x,c)=>x+c.livre,0);if(g>orc)return-1;const r=monteCarlo(calc,baseFor(calc),C.pay,700,P.mensal,T,777);return r.prob[T]*1e9+r.media/1e3};
+const antes=monteCarlo(C.cc,C.fixos.base,C.pay,700,P.mensal,T,777).prob[T];let best=avaliar(cartas,lances);
+for(let pass=0;pass<2;pass++)S.cotas.forEach((c,i)=>{if(!c.ativa)return;const orig=num(c.cartaOrig);const lo=String(c.pManual).trim()!==""?[lances[i]]:[0,num(c.vencMin),num(c.vencMed),num(c.vencMed)+5];for(const m of mults)for(const lp of lo){const cs=cartas.slice(),ls=lances.slice();cs[i]=Math.round(orig*m);ls[i]=lp;const v=avaliar(cs,ls);if(v>best){best=v;cartas[i]=cs[i];lances[i]=lp}}});
+const calc=S.cotas.map((c,i)=>calcCota(c,fy,cartas[i],lances[i]));const depois=monteCarlo(calc,baseFor(calc),C.pay,700,P.mensal,T,777).prob[T];sug={cartas,lances,antes,depois};renderOutputs()}
+
+document.addEventListener("input",e=>{const el=e.target;if(!el.dataset||!el.dataset.k)return;setK(el.dataset.k,el.type==="checkbox"?el.checked:el.value);save();renderOutputs()});
+document.addEventListener("change",e=>{const el=e.target;if(!el.dataset||!el.dataset.k)return;setK(el.dataset.k,el.type==="checkbox"?el.checked:el.value);save();renderOutputs()});
+document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+if(b.dataset.vista){vista=b.dataset.vista;renderInputs();renderOutputs();return}
+if(b.dataset.del){const[k,i]=b.dataset.del.split(".");S[k].splice(+i,1);save();renderInputs();renderOutputs();return}
+const a=b.dataset.act;const id=Date.now().toString(36);
+if(a==="addAtivo")S.ativos.push({id:"a"+id,nome:"Nova conta",tipo:"Renda fixa",valor:"",pctCdi:"",rend12m:"",liquido:true,incluir:true,nota:""});
+else if(a==="addDivida")S.dividas.push({id:"d"+id,nome:"Nova dívida",saldo:"",parcela:"",restantes:"",nota:""});
+else if(a==="addRenda")S.rendas.push({id:"r"+id,nome:"Nova renda",valor:""});
+else if(a==="addDespesa")S.despesas.push({id:"e"+id,nome:"Nova despesa",valor:""});
+else if(a==="restaurarCartas")S.cotas.forEach(c=>c.carta=c.cartaOrig);
+else if(a==="otimizar"){b.textContent="Calculando…";setTimeout(()=>{otimizar();b.textContent="Otimizar"},20);return}
+else if(a==="aplicar"&&sug){S.cotas.forEach((c,i)=>{c.carta=String(sug.cartas[i]);c.lancePct=String(sug.lances[i])});sug=null}
+else if(a==="copiar"){const t=$("exp");t.select();try{navigator.clipboard.writeText(t.value)}catch(_){document.execCommand("copy")}$("imp-msg").textContent="Dados copiados.";return}
+else if(a==="importar"){try{const o=JSON.parse($("imp").value);if(!o||!Array.isArray(o.ativos)||!Array.isArray(o.cotas)||!o.p)throw 0;S=o;$("imp-msg").textContent="Dados importados."}catch(_){$("imp-msg").textContent="Não foi possível ler o texto colado. Cole o conteúdo completo copiado acima.";return}}
+else if(a==="reset"){if(!confirm("Apagar suas edições e voltar aos valores de 15/11/2026?"))return;S=clone(INICIAL)}
+else return;
+save();renderInputs();renderOutputs()});
+async function decifrar(){const k=new URLSearchParams(location.hash.slice(1)).get("k");if(!k)return null;try{const raw=Uint8Array.from(atob(k.replace(/-/g,"+").replace(/_/g,"/")),ch=>ch.charCodeAt(0));const key=await crypto.subtle.importKey("raw",raw,"AES-GCM",false,["decrypt"]);const iv=Uint8Array.from(atob(ENC.iv),ch=>ch.charCodeAt(0));const ct=Uint8Array.from(atob(ENC.ct),ch=>ch.charCodeAt(0));const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv},key,ct);return JSON.parse(new TextDecoder().decode(pt))}catch(e){return null}}
+(async()=>{INICIAL=await decifrar();if(!S&&INICIAL)S=clone(INICIAL);if(!S){document.querySelector("main").innerHTML='<h1>Painel financeiro</h1><p>Abra este painel pelo link completo recebido por e-mail.</p>';return}if(!INICIAL){const r=document.querySelector('[data-act="reset"]');if(r)r.style.display="none"}save();renderInputs();renderOutputs()})();
+</script>
+</body>
+</html>
